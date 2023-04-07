@@ -8,7 +8,7 @@ SELECT t1.idPedido,
        t1.dtAprovado,
        t1.dtEntregue,
        t1.dtEstimativaEntrega,
-       sum(vlFrete) as totalFrente       
+       sum(vlFrete) as totalFrete       
 
 FROM silver.olist.pedido AS t1
 
@@ -33,10 +33,10 @@ SELECT
     idVendedor,
     COUNT(DISTINCT CASE WHEN date(coalesce(dtEntregue, '2018-01-01')) > date(dtEstimativaEntrega) THEN idPedido END) / COUNT(DISTINCT CASE WHEN descSituacao = 'delivered' THEN idPedido END) AS pctPedidoAtraso,
     count(distinct case when descSituacao = 'canceled' then idPedido end) / count(distinct idPedido) AS pctPedidoCancelado,
-    avg(totalFrente) as avgFrete,
-    percentile(totalFrente, 0.5) as medianFrete,
-    max(totalFrente) as maxFrete,
-    min(totalFrente) as minFrete,
+    avg(totalFrete) as avgFrete,
+    percentile(totalFrete, 0.5) as medianFrete,
+    max(totalFrete) as maxFrete,
+    min(totalFrete) as minFrete,
     avg(datediff(coalesce(dtEntregue, '2018-01-01'), dtAprovado)) AS qtdDiasAprovadoEntrega,
     avg(datediff(coalesce(dtEntregue, '2018-01-01'), dtPedido)) AS qtdDiasPedidoEntrega,
     avg(datediff(dtEstimativaEntrega, coalesce(dtEntregue, '2018-01-01'))) AS qtdeDiasEntregaPromessa
